@@ -1,0 +1,47 @@
+version: 1.0
+
+hooks:
+  on_elected:
+    exec:
+      image: quay.io/official-images/debian:buster
+      commands:
+        - '[ -n "$PUBLISH_BRANCH" ] || { echo "PUBLISH_BRANCH is empty" ; exit 1; }'
+        - '[ -n "$CF_BRANCH" ] || { echo "CF_BRANCH is empty" ; exit 1; }'
+        - '[ -n "$CF_REPO_NAME" ] || { echo "CF_REPO_NAME is empty" ; exit 1; }'
+        - '[ -n "$CF_REPO_OWNER" ] || { echo "CF_REPO_OWNER is empty" ; exit 1; }'
+
+stages:
+  - test
+  - build
+  - publish
+  - deploy
+
+steps:
+  clone:
+    stage: test
+    type: git-clone
+    arguments:
+      repo: VIOOH/${{CF_REPO_NAME}}
+      revision: ${{CF_BRANCH}}
+      git: github
+
+  docker_build:
+    stage: build
+    type: build
+    arguments:
+      disable_push: true
+      image_name: apps/mwaa-local
+      working_directory: ${{clone}}/docker
+      tag: 2_4
+
+  docker_push:
+    stage: publish
+    type: push
+    arguments:
+      candidate: ${{docker_build}}
+      registry: ecr
+      tag: 2_4
+    when:
+      condition:
+        all:
+          publish_branch: '"${{CF_BRANCH}}" == "${{PUBLISH_BRANCH}}"'
