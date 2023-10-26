@@ -32,7 +32,7 @@ steps:
       disable_push: true
       image_name: apps/mwaa-local
       working_directory: ${{clone}}/docker
-      tag: 2_4
+      tag: '2_4'
 
   docker_push:
     stage: publish
@@ -40,7 +40,7 @@ steps:
     arguments:
       candidate: ${{docker_build}}
       registry: ecr
-      tag: 2_4
+      tag: '2_4'
     when:
       condition:
         all:
