@@ -11,13 +11,13 @@ hooks:
         - '[ -n "$CF_REPO_OWNER" ] || { echo "CF_REPO_OWNER is empty" ; exit 1; }'
 
 stages:
-  - test
+  - prep
   - build
   - publish
 
 steps:
   clone:
-    stage: test
+    stage: prep
     type: git-clone
     arguments:
       repo: VIOOH/${{CF_REPO_NAME}}
