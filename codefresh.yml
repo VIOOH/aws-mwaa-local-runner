@@ -3,7 +3,7 @@ version: 1.0
 hooks:
   on_elected:
     exec:
-      image: quay.io/official-images/debian:buster
+      image: debian:buster
       commands:
         - '[ -n "$PUBLISH_BRANCH" ] || { echo "PUBLISH_BRANCH is empty" ; exit 1; }'
         - '[ -n "$CF_BRANCH" ] || { echo "CF_BRANCH is empty" ; exit 1; }'
