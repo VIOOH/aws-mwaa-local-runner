@@ -1,5 +1,11 @@
 # About aws-mwaa-local-runner
 
+## About this VIOOH fork
+
+The upstream project was forked to enable basic auth for the Airflow API, so that it can be used for DAG integration tests.
+
+## About the upstream project
+
 This repository provides a command line interface (CLI) utility that replicates an Amazon Managed Workflows for Apache Airflow (MWAA) environment locally.
 
 *Please note: MWAA/AWS/DAG/Plugin issues should be raised through AWS Support or the Airflow Slack #airflow-aws channel.  Issues here should be focused on this local-runner repository.*
